@@ -13,10 +13,10 @@
 
   <div class="row">
 
-  {% if users %}
+    {% if users %}
     {% for user in users %}
       <div class="col-sm-6 col-md-3">
-          <h3><a href="{% url 'profile' user.id %}">{{user.user.username}}</a></h3>
+          <h3><a href="{% url 'profile' user.user.id %}">{{user.user.username}}</a></h3>
       </div>
     {% endfor %}
   {% endif %}

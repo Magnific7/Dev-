@@ -6,17 +6,17 @@
   {% if credentials%}
   {%for credential in credentials%}
     <div class="row" style="padding-bottom:20px">
-      <div class="col-md-4">
-        <img class="center-block img-responsive img-circle" src="{{credential.profile_photo.url}}" alt="" style="width:170px; height:170px">
+      <div class="col-md-6">
+        <img class="center-block img-responsive img-circle" src="{{credential.profile_photo.url}}" alt="" style="width:340px; height:340px;margin-top: 20%;">
       </div>
-      <div class="col-md-8">
-        <h2><strong>{{credential.user}}</strong></h2>
+      <div class="col-md-6">
+        <h2><strong>Personal Information</strong></h2>
+        <h2>Name:{{credential.user.username}}</h2>
+        <h3><a href="{{credential.linkedin}}}">Linkedin</a></h3>
+        <h3><a href="{{credential.linkedin}}}">GitHub</a></h3>
         <h2><strong>{{credential.experience}}</strong></h2>
         <h2><strong>{{credential.contacts}}</strong></h2>
         <h2><strong>{{credential.level}} developer</strong></h2>
-        <a href="{{credential.linkedin}}}" class="fa fa-linkedin"></a>
-        <a href="{{credential.github}}}" class="fa fa-github"></a>
-        <h4><strong>{{images|length}}</strong> Post{{images|pluralize}} <strong>{{followers}}</strong> Follower{{followers|pluralize}} <strong>{{followings}}</strong> Following</h4>
         <h4>{{credential.bio}}</h4>
         {%if credential.user.id == user.id%}
            <a class="btn btn-default btn-lg" href="{% url 'update_profile' %}">
@@ -38,20 +38,22 @@
         <h4>An Awesome Bio Will Appear Here</h4>
         <a class="btn btn-sm btn-primary" href="{% url 'update_profile' %}"> Update Profile</a>
       </div>
+            {%if images%}
+              {% for image in images%}
+          <div class="col-md-4">                
+                <div class="hovereffect thumbnail">
+                        <h3>{{image.title}}</h3>
+                        <p>{{image.description}}</p>
+              </div>
+          </div>
+              {%endfor%}
+        {%else%}
     </div>
   {%endif%}
 <hr>    
 <div class="row">
    <div class="container">
-   {%if images%}
-   {% for image in images%}
-     <div class="col-md-4">                
-          <div class="hovereffect thumbnail">
-                   <img class="img-responsive" src="{{image.image.url}}" alt="">
-         </div>
-     </div>
-   {%endfor%}
-   {%else%}
+   
      {%if credential.user.id == user.id%}
          <h3 class="text-center">You havent posted any images yet. Get started by posting one <a href="{% url 'new-image' %}">here</a></h3>
      {%else%}

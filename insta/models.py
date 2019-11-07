@@ -3,18 +3,25 @@ from django.db import models
 import datetime as dt
 from tinymce.models import HTMLField
 
+LEVEL_CHOICES = (
+    ('Junior','Junior'),
+    ('Beginner', 'Beginner'),
+    ('Intermediate','Intermediate'),
+    ('Senior','Senior'),
+)
+
 class Profile(models.Model):
     class Meta:
         db_table = 'profile'
     bio = models.CharField(max_length=200, null=True, blank=True)
-    profile_photo = models.ImageField(upload_to='pictures/', null=True, blank=True)
+    profile_photo = models.ImageField(upload_to='pictures/', null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     experience = models.CharField(max_length=50, null=True, blank=True)
     email = models.EmailField(null=True, blank=True, )
     contacts = models.CharField(max_length=50, null=True, blank=True)
     github = models.URLField(max_length=200, null=True, blank=True)
     linkedin = models.URLField(max_length=200, null=True, blank=True)
-    level = models.CharField(max_length=10, null=True, blank=True)
+    level = models.CharField(max_length=20, choices=LEVEL_CHOICES, default='Junior')
 
     def save_profile(self):
         self.save()

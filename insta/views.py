@@ -54,15 +54,14 @@ def update_profile(request):
     current_user = request.user
     if request.method == 'POST':
         if Profile.objects.filter(user_id=current_user).exists():
-    
-            form = UpdatebioForm(request.POST, request.FILES,instance=Profile.objects.get(id=current_user.profile.id))
+            form = UpdatebioForm(request.POST, request.FILES,instance=Profile.objects.get(user_id=current_user))
         else:
             form = UpdatebioForm(request.POST, request.FILES)
-            if form.is_valid():
-                image = form.save(commit=False)
-                image.user = current_user
-                image.save()
-                return redirect('home')
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user = current_user
+            image.save()
+        return redirect('home')
 
     else:
         if Profile.objects.filter(user_id=current_user).exists():
